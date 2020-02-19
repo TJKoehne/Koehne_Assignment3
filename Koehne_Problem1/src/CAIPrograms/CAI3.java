@@ -1,8 +1,6 @@
 package CAIPrograms;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class CAI3 {
@@ -13,18 +11,16 @@ public class CAI3 {
 	
 	private static void quiz() {
 		SecureRandom random = new SecureRandom();
-		
 		int userResponse = -1;
 		int isUserCorrect = 0;
 		int grade = 0;
 		
-		
 		while (true) {
 			displayIntroMessage();
 			if (getUserChoice() == 2) {
+				System.out.println("Exiting now");
 				break;
 			}
-			
 			for(int i=0; i<10; i++){
 				int firstRdmNum = random.nextInt(10);
 				int secondRdmNum = random.nextInt(10);
@@ -36,9 +32,7 @@ public class CAI3 {
 				displayResponse(isUserCorrect);
 			}
 			displayCopmletionMessage(grade);
-			
 		}
-	
 	}
 	
 	private static void displayIntroMessage() {
