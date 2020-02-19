@@ -14,21 +14,49 @@ public class CAI3 {
 	private static void quiz() {
 		SecureRandom random = new SecureRandom();
 		
-		int firstRdmNum = random.nextInt(10);
-		int secondRdmNum = random.nextInt(10);
-		int answer = firstRdmNum * secondRdmNum;
 		int userResponse = -1;
 		int isUserCorrect = 0;
 		int grade = 0;
 		
-		for(int i=0; i<10; i++){
-			askQuestion(firstRdmNum, secondRdmNum);
-			userResponse = readResponse();
-			isUserCorrect = isAnswerCorrect(userResponse, answer);
-			grade += isUserCorrect;
-			displayResponse(isUserCorrect);
+		
+		while (true) {
+			displayIntroMessage();
+			if (getUserChoice() == 2) {
+				break;
+			}
+			
+			for(int i=0; i<10; i++){
+				int firstRdmNum = random.nextInt(10);
+				int secondRdmNum = random.nextInt(10);
+				int answer = firstRdmNum * secondRdmNum;
+				askQuestion(firstRdmNum, secondRdmNum);
+				userResponse = readResponse();
+				isUserCorrect = isAnswerCorrect(userResponse, answer);
+				grade += isUserCorrect;
+				displayResponse(isUserCorrect);
+			}
+			displayCopmletionMessage(grade);
+			
 		}
-		displayCopmletionMessage(grade);
+	
+	}
+	
+	private static void displayIntroMessage() {
+		System.out.println("What would you like to do?");
+		System.out.println("1. Take a 10 Question Test");
+		System.out.println("2. Exit Program");
+	}
+	
+	
+	private static int getUserChoice() {
+		Scanner in = new Scanner(System.in);
+		int userChoice;
+		userChoice = in.nextInt();
+		while (userChoice != 1 && userChoice != 2) {
+			System.out.println("Choice Must be 1 or 2!");
+			userChoice = in.nextInt();
+		}
+		return userChoice;
 	}
 	
 	private static void askQuestion(int Num1, int Num2) {
@@ -93,10 +121,11 @@ public class CAI3 {
 	}
 	
 	private static void displayCopmletionMessage(int grade) {
+		System.out.println("Your Grade is a " + grade + "/10.");
 		if (grade > 7) {
-			System.out.println("Congratulations, you are ready to go to the next level!");
+			System.out.println("Congratulations, you are ready to go to the next level!\n");
 		} else {
-			System.out.println("Please ask your teacher for extra help.");
+			System.out.println("Please ask your teacher for extra help.\n");
 		}
 	}
 }
