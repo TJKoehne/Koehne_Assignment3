@@ -13,18 +13,21 @@ public class CAI3 {
 		SecureRandom random = new SecureRandom();
 		int userResponse = -1;
 		int isUserCorrect = 0;
-		int grade = 0;
+		int grade;
+		int firstRdmNum;
+		int secondRdmNum;
+		int answer;
 		
 		while (true) {
-			displayIntroMessage();
 			if (getUserChoice() == 2) {
 				System.out.println("Exiting now");
 				break;
 			}
+			grade = 0;
 			for(int i=0; i<10; i++){
-				int firstRdmNum = random.nextInt(10);
-				int secondRdmNum = random.nextInt(10);
-				int answer = firstRdmNum * secondRdmNum;
+				firstRdmNum = random.nextInt(10);
+				secondRdmNum = random.nextInt(10);
+				answer = firstRdmNum * secondRdmNum;
 				askQuestion(firstRdmNum, secondRdmNum);
 				userResponse = readResponse();
 				isUserCorrect = isAnswerCorrect(userResponse, answer);
@@ -43,11 +46,13 @@ public class CAI3 {
 	
 	
 	private static int getUserChoice() {
+		displayIntroMessage();
 		Scanner in = new Scanner(System.in);
 		int userChoice;
 		userChoice = in.nextInt();
 		while (userChoice != 1 && userChoice != 2) {
 			System.out.println("Choice Must be 1 or 2!");
+			displayIntroMessage();
 			userChoice = in.nextInt();
 		}
 		return userChoice;
