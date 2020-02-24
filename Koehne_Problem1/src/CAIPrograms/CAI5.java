@@ -1,3 +1,16 @@
+//Thomas Koehne 2/23/20
+
+/*
+ * For this program, I changed many of variables to instance variables
+ * I made the class have an object which reduced the amount of variable passing
+ * this also made it much easier to access data for the quiz
+ * The questionType variable is used mainly for the randomized question choice
+ * questionType is the same as mathType, which is the on the user originally choose
+ *      for everything but when random question is chosen 
+ * The purpose of it is to make sure the program knows which math question was asked
+ *      when finding the answer.
+ */
+
 package CAIPrograms;
 
 import java.security.SecureRandom;
@@ -5,9 +18,10 @@ import java.util.Scanner;
 
 public class CAI5 {
 	
+	//Instance variables are initialized;
 	private double userResponse = -1;
 	private int isUserCorrect = 0;
-	private int grade = 0;
+	private double grade = 0;
 	private double firstRdmNum;
 	private double secondRdmNum;
 	private double answer;
@@ -15,21 +29,25 @@ public class CAI5 {
 	private int mathType;
 	private int questionType;
 	
+	//Main method calling the quiz method containing the logic
 	public static void main(String[] args) {
 		quiz();
 	}
 	
+	//Method containing the logic of the program
 	private static void quiz() {
-
+		//creates a new quiz object 
 		CAI5 q1 = new CAI5();
 		while (true) {
-			if (getUserChoice() == 2) {
+			//checks to see if the user wants to continue using the program
+			if (q1.getUserChoice() == 2) {
 				System.out.println("Exiting now");
 				break;
 			}
 			q1.grade = 0;
 			q1.readDifficulty();
 			q1.readProblemType();
+			//Loop to ask 10 questions
 			for(int i=0; i<10; i++){
 				q1.generateQuestionArgument();
 				q1.askQuestion();
@@ -42,6 +60,7 @@ public class CAI5 {
 		}
 	}
 
+	//generates the random numbers for the problems based on difficulty
 	private void generateQuestionArgument() {
 		SecureRandom random = new SecureRandom();
 		switch (difficulty) {
@@ -64,7 +83,8 @@ public class CAI5 {
 		}
 	}
 	
-	private static int getUserChoice() {
+	//Ask the user if they want to take a test or exit the program
+	private int getUserChoice() {
 		displayIntroMessage();
 		Scanner in = new Scanner(System.in);
 		int userChoice;
@@ -76,6 +96,7 @@ public class CAI5 {
 		return userChoice;
 	}
 	
+	//gets the difficulty choice from the user
 	private void readDifficulty() {
 		displayDifficultyOptions();
 		Scanner in = new Scanner(System.in);
@@ -89,6 +110,7 @@ public class CAI5 {
 		this.difficulty =  userChoice;
 	}
 	
+	//reads the problem type choice from the user
 	private void readProblemType() {
 		displayProblemOptions();
 		Scanner in = new Scanner(System.in);
@@ -101,6 +123,7 @@ public class CAI5 {
 		questionType = mathType;
 	}
 	
+	//Calculates the answer to the problem based on what of question was asked
 	private void getAnswer() {
 		switch (questionType) {
 		case 1:
@@ -116,13 +139,13 @@ public class CAI5 {
 			if (firstRdmNum == 0 || secondRdmNum == 0) {
 				answer = 0;
 			} else {
-//				System.out.println((double)Math.round((firstNum / secondNum) *10) /10);
 				answer = (double)Math.round((firstRdmNum / secondRdmNum) *10) /10;
 			}
 			break;
 		}
 	}
 	
+	//ask a question based on the math question type chosen
 	private void askQuestion() {
 		switch (mathType) {
 		case 1:
@@ -143,6 +166,7 @@ public class CAI5 {
 		
 	}
 	
+	//Used to ask a random question
 	private void askRandomQuestion() {
 		SecureRandom random = new SecureRandom();
 		questionType = (random.nextInt(4) + 1);
@@ -162,11 +186,13 @@ public class CAI5 {
 		}
 	}
 	
+	//reads response from the user
 	private void readResponse() {
 		Scanner in = new Scanner(System.in);
 		userResponse = in.nextDouble();
 	}
 	
+	//calculates is the user response was correct
 	private void isAnswerCorrect() {
 		if (userResponse == answer) {
 			grade += 1;
@@ -176,6 +202,7 @@ public class CAI5 {
 		}
 	}
 	
+	//displays the problem option text
 	private static void displayProblemOptions() {
 		System.out.println("What problem type would you like?");
 		System.out.println("1. Addition");
@@ -185,12 +212,14 @@ public class CAI5 {
 		System.out.println("5. Random Mix");
 	}
 	
+	//displays the intro option text
 	private static void displayIntroMessage() {
 		System.out.println("What would you like to do?");
 		System.out.println("1. Take a 10 Question Test");
 		System.out.println("2. Exit Program");
 	}
 	
+	//displays the difficulty options
 	private static void displayDifficultyOptions() {
 		System.out.println("What Difficulty would you like?");
 		System.out.println("1. One Digit (0-9)");
@@ -199,6 +228,7 @@ public class CAI5 {
 		System.out.println("4. Four Digits (0-9999)");
 	}
 	
+	//determines which response to displays
 	private void displayResponse() {
 		if (isUserCorrect == 1) {
 			displayCorrectResponse();
@@ -207,6 +237,7 @@ public class CAI5 {
 		}
 	}
 	
+	//displays a random positive response
 	private static void displayCorrectResponse() {
 		SecureRandom random = new SecureRandom();
 		int output = random.nextInt(4);
@@ -226,6 +257,7 @@ public class CAI5 {
 		}
 	}
 	
+	//displays a random negative response
 	private static void displayIncorrectResponse() {
 		SecureRandom random = new SecureRandom();
 		int output = random.nextInt(4);
@@ -245,8 +277,9 @@ public class CAI5 {
 		}
 	}
 	
+	//displays a completion message along with a grade
 	private void displayCopmletionMessage() {
-		System.out.println("Your Grade is a " + grade + "/10.");
+		System.out.println("Your Grade is a " + grade * 10 + "%");
 		if (grade > 7) {
 			System.out.println("Congratulations, you are ready to go to the next level!\n");
 		} else {

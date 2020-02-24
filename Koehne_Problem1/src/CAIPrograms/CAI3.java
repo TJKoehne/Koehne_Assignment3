@@ -1,3 +1,5 @@
+//Thomas Koehne 2/23/20
+
 package CAIPrograms;
 
 import java.security.SecureRandom;
@@ -5,12 +7,16 @@ import java.util.Scanner;
 
 public class CAI3 {
 	
+	//Main method calling the quiz method containing the logic
 	public static void main(String[] args) {
 		quiz();
 	}
 	
+	//Method containing the logic of the program
 	private static void quiz() {
 		SecureRandom random = new SecureRandom();
+		
+		//Initialized variables
 		int userResponse = -1;
 		int isUserCorrect = 0;
 		int grade;
@@ -18,33 +24,39 @@ public class CAI3 {
 		int secondRdmNum;
 		int answer;
 		
+		//while loops to keep asking questions as long as the user wants
 		while (true) {
+			//checks to see if the user wants to continue using the program
 			if (getUserChoice() == 2) {
 				System.out.println("Exiting now");
 				break;
 			}
+			//resets the user grade to 0
 			grade = 0;
+			//Loops to ask 10 questions
 			for(int i=0; i<10; i++){
+				//Randomizes the two numbers for each question every loop
 				firstRdmNum = random.nextInt(10);
 				secondRdmNum = random.nextInt(10);
 				answer = firstRdmNum * secondRdmNum;
 				askQuestion(firstRdmNum, secondRdmNum);
 				userResponse = readResponse();
 				isUserCorrect = isAnswerCorrect(userResponse, answer);
-				grade += isUserCorrect;
+				grade += isUserCorrect; //Adds a point to the grade for every answer correct
 				displayResponse(isUserCorrect);
 			}
 			displayCopmletionMessage(grade);
 		}
 	}
 	
+	//Displays the text for the first user choice
 	private static void displayIntroMessage() {
 		System.out.println("What would you like to do?");
 		System.out.println("1. Take a 10 Question Test");
 		System.out.println("2. Exit Program");
 	}
 	
-	
+	//Ask the user if they want to take a test or exit the program
 	private static int getUserChoice() {
 		displayIntroMessage();
 		Scanner in = new Scanner(System.in);
@@ -58,15 +70,19 @@ public class CAI3 {
 		return userChoice;
 	}
 	
+	//Ask the math question to the user
 	private static void askQuestion(int Num1, int Num2) {
 		System.out.println("What is " + Num1 + " x " + Num2 + "?");
 	}
 	
+	//records user response
 	private static int readResponse() {
 		Scanner in = new Scanner(System.in);
 		return in.nextInt();
 	}
 	
+	//compares the answer and input to see if the user was correct
+	//If so, the method returns a value that will add a point to the grade
 	private static int isAnswerCorrect(int usrInput, int answer) {
 		if (usrInput == answer) {
 			return 1;
@@ -75,6 +91,7 @@ public class CAI3 {
 		}
 	}
 	
+	//Determines which display message to give to the user
 	private static void displayResponse(int isUserCorrect) {
 		if (isUserCorrect == 1) {
 			displayCorrectResponse();
@@ -83,6 +100,7 @@ public class CAI3 {
 		}
 	}
 	
+	//Prints a random positive message
 	private static void displayCorrectResponse() {
 		SecureRandom random = new SecureRandom();
 		int output = random.nextInt(4);
@@ -101,6 +119,7 @@ public class CAI3 {
 		}
 	}
 	
+	//prints a random negative message
 	private static void displayIncorrectResponse() {
 		SecureRandom random = new SecureRandom();
 		int output = random.nextInt(4);
@@ -119,6 +138,7 @@ public class CAI3 {
 		}
 	}
 	
+	//Outputs the grade of the user out of 10
 	private static void displayCopmletionMessage(int grade) {
 		System.out.println("Your Grade is a " + grade + "/10.");
 		if (grade > 7) {
