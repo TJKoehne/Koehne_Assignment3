@@ -1,12 +1,12 @@
 //Thomas Koehne 2/23/20
 
 /*
- * For this program, I changed many of variables to instance variables
+ * For this program, I changed the variables to instance variables
  * I made the class have an object which reduced the amount of variable passing
- * this also made it much easier to access data for the quiz
+ * This also made it much easier to access data for the quiz within the methods
  * The questionType variable is used mainly for the randomized question choice
- * questionType is the same as mathType, which is the on the user originally choose
- *      for everything but when random question is chosen 
+ * questionType is the same as mathType for the first 4 options, which is the 
+ *      user input in readProblemType method 
  * The purpose of it is to make sure the program knows which math question was asked
  *      when finding the answer.
  */
